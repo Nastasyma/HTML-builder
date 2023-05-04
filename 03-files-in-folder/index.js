@@ -7,11 +7,7 @@ const direction = path.join(__dirname, 'secret-folder');
 
 fs.readdir(direction, (err, files) => {
 
-  if (err) {
-    console.error(err);
-    return;
-  }
-
+  if (err) return console.error(err);
   for (let i = 0; i < files.length; i++) {
     const file = path.parse(files[i]);
     // console.log(file);
@@ -21,7 +17,6 @@ fs.readdir(direction, (err, files) => {
       if (err) {
         console.log("File doesn't exist");
       }
-
       if (!stats.isFile()) {
         return;
       } else {
