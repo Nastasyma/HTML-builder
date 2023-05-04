@@ -20,14 +20,14 @@ function copyDir() {
       return;
     }
 
-    for (let i=0; i<files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
       const srcFile = path.join(__dirname, 'files', files[i]);
       const destFile = path.join(__dirname, 'files-copy', files[i]);
 
       fs.stat(srcFile, (err, stats) => {
 
         if (err) {
-          console.log(err);
+          console.error(err);
           return;
         }
 
@@ -52,7 +52,7 @@ function copyDir() {
       console.error(err);
       return;
     }
-    for (let i=0; i<files.length; i++) {
+    for (let i = 0; i<files.length; i++) {
       const srcFile = path.join(__dirname, 'files', files[i]);
       const destFile = path.join(__dirname, 'files-copy', files[i]);
       // console.log("Current file: ", destFile)
