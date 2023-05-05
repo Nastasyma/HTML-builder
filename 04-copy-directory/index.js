@@ -11,7 +11,6 @@ function copyDir() {
   });
 
   fs.readdir(srcFolder, (err, files) => {
-
     if (err) return console.error(err);
     for (let i = 0; i < files.length; i++) {
       const srcFile = path.join(__dirname, 'files', files[i]);
@@ -31,7 +30,6 @@ function copyDir() {
   });
 
   fs.readdir(destFolder, (err, files) => {
-
     if (err) return console.error(err);
     for (let i = 0; i<files.length; i++) {
       const srcFile = path.join(__dirname, 'files', files[i]);
