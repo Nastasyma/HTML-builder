@@ -31,7 +31,7 @@ function copyDir() {
 
   fs.readdir(destFolder, (err, files) => {
     if (err) return console.error(err);
-    for (let i = 0; i<files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
       const srcFile = path.join(__dirname, 'files', files[i]);
       const destFile = path.join(__dirname, 'files-copy', files[i]);
       // console.log("Current file: ", destFile)
