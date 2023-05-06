@@ -16,7 +16,7 @@ async function createStyles() {
     fs.stat(srcFile, (err, stats) => {
       if (file.ext === '.css' && stats.isFile()) {
         if (err) return console.error(err);
-        fs.readFile(srcFile, (err, data) => {
+        fs.readFile(srcFile, 'utf-8', (err, data) => {
           if (err) return console.error(err);
           data = data + '\n';
           fs.appendFile(destFile, data , (err) => {
