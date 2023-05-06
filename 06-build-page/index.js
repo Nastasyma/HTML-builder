@@ -18,7 +18,7 @@ async function createFolder() {
 }
 
 async function createStyles() {
-  fs.rm(destStylesFile, { recursive: true, force: true }, err => {
+  await fs.promises.rm(destStylesFile, { recursive: true, force: true }, err => {
     if (err) return console.error(err);
   });
 
@@ -42,42 +42,39 @@ async function createStyles() {
 }
 
 async function copyDir(src, dest) {
-  try {
-    await fs.promises.mkdir(dest, { recursive: true })
 
-    const files = await fs.promises.readdir(src, {withFileTypes: true});
-    for (let i = 0; i < files.length; i++) {
-    const srcPath = path.join(src, `${files[i].name}`)
-    const destPath = path.join(dest, `${files[i].name}`)
-      if (!files[i].isFile()) {
-        copyDir(srcPath, destPath);
-      }
-      else {
-        await fs.promises.copyFile(srcPath, destPath);
-      }
-    }
+  await fs.promises.mkdir(dest, { recursive: true });
 
-    const destFiles = await fs.promises.readdir(dest, {withFileTypes: true});
-    for (let i = 0; i < destFiles.length; i++) {
-      const srcPath = path.join(src, `${destFiles[i].name}`)
-      const destPath = path.join(dest, `${destFiles[i].name}`)
-      fs.access(srcPath, function(err){
-        if (err) {
-          console.log(`${destFiles[i].name} not found`);
-          fs.unlink(destPath, err => {
-            if (err) return console.error(err);
-            console.log(`${destFiles[i].name} has been deleted`);
-          });
-        }
-      });
+  const files = await fs.promises.readdir(src, {withFileTypes: true});
+  for (let i = 0; i < files.length; i++) {
+  const srcPath = path.join(src, `${files[i].name}`)
+  const destPath = path.join(dest, `${files[i].name}`)
+    if (!files[i].isFile()) {
+      copyDir(srcPath, destPath);
     }
-  } catch(err) {
-    return console.error(err);
+    else {
+      await fs.promises.copyFile(srcPath, destPath);
+    }
+  }
+
+  const destFiles = await fs.promises.readdir(dest, {withFileTypes: true});
+  for (let i = 0; i < destFiles.length; i++) {
+    const srcPath = path.join(src, `${destFiles[i].name}`)
+    const destPath = path.join(dest, `${destFiles[i].name}`)
+    fs.access(srcPath, function(err){
+      if (err) {
+        console.log(`${destFiles[i].name} not found`);
+        fs.unlink(destPath, err => {
+          if (err) return console.error(err);
+          console.log(`${destFiles[i].name} has been deleted`);
+        });
+      }
+    });
   }
 }
 
 async function createHtml() {
-  fs.rm(destFile, { recursive: true, force: true }, err => {
+  await fs.promises.rm(destFile, { recursive: true, force: true }, err => {
     if (err) return console.error(err);
   });
 
@@ -93,7 +90,7 @@ async function createHtml() {
     }
   }
 
-  fs.appendFile(destFile, htmlTemplate, (err) => {
+  await fs.promises.appendFile(destFile, htmlTemplate, (err) => {
     if (err) return console.error(err);
   });
 }
@@ -106,7 +103,3 @@ function buildHTML() {
   createHtml();
 }
 buildHTML();
-
-
-
-
